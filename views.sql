@@ -55,3 +55,20 @@ SELECT
   contact_info,
   availability_jsonb
 FROM volunteers;
+
+CREATE OR REPLACE VIEW orphan_full_profile AS
+SELECT
+    o.id AS orphan_id,
+    jsonb_build_object(
+        'name', o.full_name,
+        'dob', o.date_of_birth,
+        'age', date_part('year', age(o.date_of_birth)),
+        'gender', o.gender,
+        'project', p.project_name,
+        'campaign', c.campaign_name
+    ) AS orphan_profile
+FROM orphan o
+LEFT JOIN orphan_project op ON o.id = op.orphan_id
+LEFT JOIN project p ON op.project_id = p.id
+LEFT JOIN campaign_orphan co ON o.id = co.orphan_id
+LEFT JOIN campaign c ON co.campaign_id = c.id;
