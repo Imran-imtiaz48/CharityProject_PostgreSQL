@@ -1,78 +1,77 @@
-# CharityConnect PostgreSQL Project
+# CharityProject\_PostgreSQL
 
-CharityConnect is a fully structured PostgreSQL-based database project built to support the operational needs of a charitable organization. It includes support for managing orphans, projects (like wells and mosques), seasonal campaigns (summer, winter, zakat), donations, and volunteer coordination. The project is built entirely in PostgreSQL (no Python or other language used), with real-time JSONB data usage, custom functions, views, and event logging.
+A comprehensive PostgreSQL project designed for managing data in a charity organization. This project simulates real-world operations such as managing orphans, donors, projects (wells, mosques), and seasonal campaigns (zakat, summer, winter), with a strong emphasis on reporting, analytics, and audit logging.
 
-## 🔧 Technologies Used
+## 🌟 Key Features
 
-* PostgreSQL 15+
-* JSONB columns for flexible data
-* PL/pgSQL for user-defined functions
-* Views and triggers for advanced querying
+### 📂 Schema Design
 
-## 📁 Project Structure
+* **Orphans**: Manage orphan records including age, gender, and sponsorship status.
+* **Projects**: Track charitable projects such as wells and mosques, their locations, and status.
+* **Campaigns**: Organize zakat, summer, and winter donation campaigns with metadata.
+* **Donations**: Manage donations from donors linked to specific campaigns or projects.
+* **Sponsors & Donors**: Track donor contributions and sponsorships.
+
+### 🔍 Views
+
+* `view_orphan_details`: Detailed view of orphans with sponsorship info.
+* `view_project_status`: Monitor ongoing and completed projects.
+* `view_campaign_summary`: Overview of donation stats by campaign.
+* `view_top_donors`: Top donors by amount and frequency.
+* `view_upcoming_projects`: Filter projects nearing start or completion.
+* `view_recent_donations`: Donations made in the last 30 days.
+
+### ⚙️ Functions
+
+* `get_top_donors(limit, start_date, end_date)`: Returns top N donors in a date range.
+* `get_near_completion_projects()`: Returns projects about to be completed.
+* `calculate_sponsorship_duration(orphan_id)`: Returns how long a sponsor has supported an orphan.
+* `campaign_donation_total(campaign_id)`: Returns total donations for a specific campaign.
+
+### 🔁 Triggers & Audit Logs
+
+* **Audit tables** track INSERT, UPDATE, and DELETE actions on the `donations` table.
+* Triggers automatically store change logs with timestamps and previous vs. new values.
+* File: `triggers_auditing.sql`
+
+### 🔐 Security and Constraints
+
+* **Custom constraints** ensure data integrity like minimum donation amount.
+* **Row Level Security (planned)** for future support of role-based access control.
+
+---
+
+## 🗂️ Project Structure
 
 ```
-CharityConnect_PostgreSQL/
-├── schema.sql            # Database tables and structure
-├── data.sql              # Sample data for all tables
-├── views.sql             # Defined reusable views
-├── functions.sql         # User-defined functions in PL/pgSQL
-├── README.md             # Project overview and setup guide
-└── CharityConnect_Full_PostgreSQL.zip
+CharityProject_PostgreSQL/
+├── schema.sql              # Tables and constraints
+├── data.sql                # Sample data for all tables
+├── views.sql               # Analytical and reporting views
+├── functions.sql           # User-defined functions
+├── triggers_auditing.sql   # Triggers and audit log implementation
+├── README.md               # Project documentation
+└── diagram.png             # ERD diagram for project visualization
 ```
 
-## 📦 Tables Included
+---
 
-* `orphans`: Information about orphan children
-* `projects`: Details about water wells, mosques, etc.
-* `campaigns`: Seasonal and donation campaigns (summer, winter, zakat)
-* `donors`: People who contribute funds
-* `donations`: Donation records
-* `volunteers`: Volunteers and their availability (JSONB)
-* `feedback`: Feedback submitted on support and projects
-* `event_log`: System logging for JSONB event tracking
+## 🧐 Real-World Simulation
 
-## 🔍 Views
+* Uses **real-time donation data** fetched from a live API and stored in JSONB format.
+* Handles **seasonal campaigns** like Zakat, Winter Aid, and Summer Relief.
+* Designed for scalability, reporting, and integration with external applications or dashboards.
 
-* `view_orphan_details`
-* `view_active_campaigns`
-* `view_donations_summary`
-* `view_project_impact`
+---
 
-## 🧠 Functions
+## 🔗 GitHub Repository
 
-* `calculate_total_donations_for_campaign(id)`
-* `get_orphan_json_summary(id)`
-* `log_event(type, jsonb)`
-* `get_active_campaigns_by_type(type)`
-* `get_volunteer_availability_json(volunteer_id)`
+[📁 View on GitHub](https://github.com/Imran-imtiaz48/CharityProject_PostgreSQL)
 
-## 🌐 Real-time Data
+---
 
-Used JSONB columns in `volunteers` and `orphans` for storing flexible real-world data including:
+## 📌 Next Steps
 
-* Availability schedules
-* Dynamic feedback
-* Donor metadata
-
-## ⚙️ Setup Instructions
-
-1. Make sure PostgreSQL is installed (`version 15+` recommended).
-2. Create a database:
-   `CREATE DATABASE charity_connect;`
-3. Load schema:
-   `psql -d charity_connect -f schema.sql`
-4. Insert data:
-   `psql -d charity_connect -f data.sql`
-5. Create views:
-   `psql -d charity_connect -f views.sql`
-6. Load functions:
-   `psql -d charity_connect -f functions.sql`
-
-## 📌 Contribution Ideas
-
-* Add triggers for automatic updates
-* Create audit logging on donation changes
-* Expand with region-based projects (countries, zones)
-* Integrate with APIs using PostgreSQL foreign data wrappers (FDW)
-
+* Add Role-Based Access Control via PostgreSQL policies
+* Build a Power BI Dashboard from this dataset
+* Add Scheduled Procedures for monthly reports
