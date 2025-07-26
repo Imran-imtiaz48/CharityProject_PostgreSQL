@@ -76,3 +76,12 @@ CREATE TABLE event_log (
     event_data JSONB,
     logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS donor_monthly_summary (
+    donor_id INT NOT NULL,
+    donor_name TEXT NOT NULL,
+    total_amount NUMERIC(10,2) NOT NULL DEFAULT 0,
+    summary_month DATE NOT NULL,
+    generated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (donor_id, summary_month)
+);
