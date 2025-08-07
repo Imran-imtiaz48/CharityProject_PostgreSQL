@@ -1,77 +1,83 @@
-# CharityProject\_PostgreSQL
+# Charity Project in PostgreSQL
 
-A comprehensive PostgreSQL project designed for managing data in a charity organization. This project simulates real-world operations such as managing orphans, donors, projects (wells, mosques), and seasonal campaigns (zakat, summer, winter), with a strong emphasis on reporting, analytics, and audit logging.
+This PostgreSQL-based project is designed for a charity organization that manages orphans, projects (wells, mosques), and various campaigns (summer, winter, zakat). The project uses advanced PostgreSQL features including views, functions, JSONB, audit logging, and disaster recovery mechanisms.
 
-## 🌟 Key Features
+## 🔧 Features
 
-### 📂 Schema Design
+### Core Tables
+- **orphans**: Stores orphan details.
+- **donors**: Stores donor information.
+- **projects**: Includes project details such as wells and mosques.
+- **campaigns**: Handles seasonal campaigns like Summer, Winter, and Zakat.
+- **donations**: Tracks donations linked to donors, orphans, projects, or campaigns.
 
-* **Orphans**: Manage orphan records including age, gender, and sponsorship status.
-* **Projects**: Track charitable projects such as wells and mosques, their locations, and status.
-* **Campaigns**: Organize zakat, summer, and winter donation campaigns with metadata.
-* **Donations**: Manage donations from donors linked to specific campaigns or projects.
-* **Sponsors & Donors**: Track donor contributions and sponsorships.
+### JSONB Usage
+- Metadata and extended information is stored in JSONB format for flexible querying and storage.
 
-### 🔍 Views
+### Views
+- Comprehensive SQL views for:
+  - Orphan sponsorship details
+  - Donation statistics
+  - Campaign donation summary
+  - Project progress reports
 
-* `view_orphan_details`: Detailed view of orphans with sponsorship info.
-* `view_project_status`: Monitor ongoing and completed projects.
-* `view_campaign_summary`: Overview of donation stats by campaign.
-* `view_top_donors`: Top donors by amount and frequency.
-* `view_upcoming_projects`: Filter projects nearing start or completion.
-* `view_recent_donations`: Donations made in the last 30 days.
+### Functions & Stored Procedures
+- Get top N donors in a date range
+- Return projects nearing completion
+- Auto-calculate sponsorship duration
+- Summarize monthly donations
+- Generate campaign donation reports
 
-### ⚙️ Functions
+### Triggers & Auditing
+- Audit tables track changes in orphans, donations, and projects.
+- Each insert, update, and delete is logged with a timestamp.
 
-* `get_top_donors(limit, start_date, end_date)`: Returns top N donors in a date range.
-* `get_near_completion_projects()`: Returns projects about to be completed.
-* `calculate_sponsorship_duration(orphan_id)`: Returns how long a sponsor has supported an orphan.
-* `campaign_donation_total(campaign_id)`: Returns total donations for a specific campaign.
+### Disaster Recovery
+- Backup (shadow) tables with triggers to maintain real-time backups.
+- Procedures to restore tables from backup.
+- Detection mechanisms for tampering or unauthorized deletions.
 
-### 🔁 Triggers & Audit Logs
+## 📁 File Structure
 
-* **Audit tables** track INSERT, UPDATE, and DELETE actions on the `donations` table.
-* Triggers automatically store change logs with timestamps and previous vs. new values.
-* File: `triggers_auditing.sql`
+- `schema.sql` — Table definitions
+- `data.sql` — Sample data insertion
+- `views.sql` — SQL views
+- `functions.sql` — Functions for analytics and business logic
+- `storedProcedures.sql` — Stored procedures for complex operations
+- `triggers_auditing.sql` — Triggers and audit logs
+- `disaster_recovery.sql` — Recovery and backup scripts
+- `diagram.png` — ERD diagram for understanding schema
 
-### 🔐 Security and Constraints
+## 🌐 Real-time Data
+This project is structured to easily incorporate real-time external data (e.g. exchange rates or donor validation APIs) through extensions or application layers.
 
-* **Custom constraints** ensure data integrity like minimum donation amount.
-* **Row Level Security (planned)** for future support of role-based access control.
+## 🧠 Credits
+Thanks to **Waqar Ali** for his valuable guidance and ideas throughout this project.
 
----
+## 🚀 How to Use
 
-## 🗂️ Project Structure
-
+1. Clone the repository:
+```bash
+git clone https://github.com/Imran-imtiaz48/CharityProject_PostgreSQL.git
+cd CharityProject_PostgreSQL
 ```
-CharityProject_PostgreSQL/
-├── schema.sql              # Tables and constraints
-├── data.sql                # Sample data for all tables
-├── views.sql               # Analytical and reporting views
-├── functions.sql           # User-defined functions
-├── triggers_auditing.sql   # Triggers and audit log implementation
-├── README.md               # Project documentation
-└── diagram.png             # ERD diagram for project visualization
+
+2. Run scripts in PostgreSQL:
+```sql
+\i schema.sql
+\i data.sql
+\i views.sql
+\i functions.sql
+\i storedProcedures.sql
+\i triggers_auditing.sql
+\i disaster_recovery.sql
 ```
 
----
+3. Explore and expand!
 
-## 🧐 Real-World Simulation
-
-* Uses **real-time donation data** fetched from a live API and stored in JSONB format.
-* Handles **seasonal campaigns** like Zakat, Winter Aid, and Summer Relief.
-* Designed for scalability, reporting, and integration with external applications or dashboards.
+## 📷 ERD Preview
+![ERD](diagram.png)
 
 ---
 
-## 🔗 GitHub Repository
-
-[📁 View on GitHub](https://github.com/Imran-imtiaz48/CharityProject_PostgreSQL)
-
----
-
-## 📌 Next Steps
-
-* Add Role-Based Access Control via PostgreSQL policies
-* Build a Power BI Dashboard from this dataset
-* Add Scheduled Procedures for monthly reports
+This project demonstrates real-world database architecture, maintainability, and data protection best practices.
