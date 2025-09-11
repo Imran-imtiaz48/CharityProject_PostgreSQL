@@ -1,6 +1,6 @@
 # Charity Project in PostgreSQL
 
-This PostgreSQL-based project is designed for a charity organization that manages orphans, projects (wells, mosques), and various campaigns (summer, winter, zakat). The project uses advanced PostgreSQL features including views, functions, JSONB, audit logging, MVCC version tracking, and disaster recovery mechanisms.
+The PostgreSQL-based project is designed for a charity organization that manages orphans, projects (wells, mosques), and various campaigns (summer, winter, zakat). The project uses advanced PostgreSQL features including views, functions, JSONB, audit logging, MVCC version tracking, and disaster recovery mechanisms.
 
 ## 🔧 Features
 
