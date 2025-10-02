@@ -72,10 +72,6 @@ The PostgreSQL-based project is designed for a charity organization that manages
 
 This project is structured to easily incorporate real-time external data (e.g. exchange rates or donor validation APIs) through extensions or application layers.
 
-## 🧠 Credits
-
-Thanks to **Waqar Ali** for his valuable guidance and ideas throughout this project.
-
 ## 🚀 How to Use
 
 1. Clone the repository:
